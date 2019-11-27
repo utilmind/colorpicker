@@ -1,4 +1,4 @@
-# jQuery-ColorPicker (looks&feels like Google Keep's color picker)
+# jQuery-ColorPicker (Google Keep's color picker)
 Forked from Angular-ColorPicker by Daniel Baruch @ https://github.com/bladepop/colorpicker
 and rewritten with jQuery by Oleksii Kuznietsov aka UtilMind @ https://github.com/utilmind/colorpicker
 
