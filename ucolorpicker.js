@@ -3,7 +3,6 @@
     $.fn.uColorPicker = function(options) {
         var o=$.extend({}, {
               color: "",
-              convertToHex: 1,
               onColorChanged: null,
           }, options),
 
@@ -23,11 +22,11 @@
                 initToken = "init-click",
 
                 setColor = function(color, selectedElement, onChanged) {
-                  if (o.convertToHex)
-                    color = rgb2hex(color);
+                  color = rgb2hex(color);
+                  color = color.charAt(0) == "#" ? color : "";
 
-                  if (!selectedElement)
-                    selectedElement = $palette.find('div[data-color="'+color.toUpperCase()+'"]')
+                  if (!selectedElement) // case-insensitive search. And selector 'div[data-color="'++color'" i]' doesn't works. Don't try it again, don't waste time. Use filter().
+                    selectedElement = color ? $palette.find("div[data-color]").filter(function(){ return $(this).attr("data-color").toLowerCase().indexOf(color) > -1; }) : $palette.find(".transparent-color");
 
                   $palette.find("div.palette-selected-color").removeClass("palette-selected-color");
                   $(selectedElement).addClass("palette-selected-color");
@@ -52,7 +51,10 @@
 
                   // kludge to hide the color panel after click
                   $palette.css("display", "none");
-                  setTimeout(function() { $palette.css("display", ""); }, 50);
+                  $(document).on("mousemove mousedown", function(){
+                    $palette.css("display", "");
+                    $(document).off("mousemove");
+                  });
                 });
               });
             }
